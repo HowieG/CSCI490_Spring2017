@@ -1,0 +1,6 @@
+USE CSCI490;
+
+INSERT INTO Schools (schoolname) VALUES ('Testschool1');
+
+GRANT ALL PRIVILEGES ON * . * TO 'CSCI490'@'localhost';
+FLUSH PRIVILEGES;
