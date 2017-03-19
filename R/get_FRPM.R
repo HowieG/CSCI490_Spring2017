@@ -2,7 +2,7 @@
 
 get_FRPM <- function(schoolyear, SchoolCodes) {
   
-  setwd("~/Desktop/CSCI490/Data")
+  setwd("~/Desktop/CSCI490/CSCI490_Spring2017/Data")
   FRPM_filename <- paste("FRPM/frpm", schoolyear, ".xls", sep = "")
   
   #concatenate year to FRPM filename

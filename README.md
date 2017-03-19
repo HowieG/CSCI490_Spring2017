@@ -1,7 +1,7 @@
 # CSCI490_Spring2017
 Research project to determine influence of income and ethnicity in high schools that offer Computer Science. Done as part of CSCI 490: Directed Research
 
-Data: California school data such as course availability, course enrollment, income estimators, ethnicity, etc. which we reduce down to relevant tables.
+Data: California school data such as course availability, course enrollment, income estimators, ethnicity, etc. which we reduce down to relevant tables. [For now Data is empty because the files exceed GitHub's 100 MB/file limit!]
 
 Python: initial data-gathering involved web crawling/scraping in Python
 

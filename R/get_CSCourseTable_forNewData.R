@@ -7,14 +7,14 @@ get_CSCourseTable_forNewData <- function(Course_Enrollment_File, schoolyear) {
   
   #this holds course names (AssignmentName) and course ID (AssignmentCode) for all tracked courses
   library(readxl)
-  setwd("~/Desktop/CSCI490/Data/AssignmentCodes")
+  setwd("~/Desktop/CSCI490/CSCI490_Spring2017/Data/AssignmentCodes")
   CourseAssignmentCodes_Complete <- read_excel(Assignment_Code_File)
   
   #open the Course Enrollment data (2014-2015)
   #this holds schools, courses, and course enrollment by gender/ethnicity
   #install.packages("rio") # Only install once
   library(rio)
-  setwd("~/Desktop/CSCI490/Data/CourseEnrollment")
+  setwd("~/Desktop/CSCI490/CSCI490_Spring2017/Data/CourseEnrollment")
   CourseEnrollment_Complete <- import(Course_Enrollment_File)
   
   #make new data frame with only Computer courses
@@ -61,7 +61,7 @@ get_CSCourseTable_forNewData <- function(Course_Enrollment_File, schoolyear) {
   
   if(!exists("getCSCourseTable_forNewData", mode="function")) {
     
-    setwd("~/Desktop/CSCI490/R")
+    setwd("~/Desktop/CSCI490/CSCI490_Spring2017/R")
     source("get_FRPM.R") 
     FRPM_ComputerCourses_LosAngeles <- get_FRPM(schoolyear, CourseEnrollment_ComputerCourses_LosAngeles$SchoolCode)
   }
