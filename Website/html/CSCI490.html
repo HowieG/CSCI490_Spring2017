@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+
+  <title>USC: LA School Data Interface</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional Bootstrap theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <link href="../css/CSCI490.css" rel="stylesheet">
+  <!-- script necessary to include other HTML inside of this one -->
+  <script src="https://www.w3schools.com/lib/w3data.js"></script>
+
+
+  <!-- Chart head -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
+  <script src="../js/utils.js"></script>
+  <style>
+    canvas{
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+  </style>
+
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Project name</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <form class="navbar-form navbar-right">
+            <!-- <div class="form-group">
+            <input type="text" placeholder="Email" class="form-control">
+          </div>
+          <div class="form-group">
+            <input type="password" placeholder="Password" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-success">Sign in</button> -->
+        </form>
+      </div><!--/.navbar-collapse -->
+    </div>
+  </nav>
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron custom-jumbotron">
+    <div class="container">
+      <!-- <h2>Welcome!</h2> -->
+      <p>The following is a data manipulation tool for Los Angeles area schools that have offered a Computer Science-related course since 1988. Its purpose is to aid a study on the relationships between various school demographics and the availability of Computer Science at that school.</p>
+      <p class = "fine-print">This project was done as part of CSCI 490: Directed Research, University of Southern California</p>
+      <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p> -->
+    </div>
+  </div>
+
+  <div class="main-container">
+    <div class = "row">
+      <div class="col-md-4 text-right">
+        <div w3-include-html="dropdown.html">
+        </div>
+      </div>
+      <!-- <div class="col-md-8" w3-include-html="basic_line_graph.html"> -->
+      <div class = "col-md-8 text-center">
+        <div style="width:75%; margin: auto;">
+          <canvas id="canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class = "row">
+      <div class="col-md-12 text-center">
+        <h2>Notable Plots</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <h3>CS Enrollment vs. Time</h3>
+        <img class = "pic" src="chart.png">
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <h3>CS Enrollment vs. Income</h3>
+        <img class = "pic" src="chart.png">
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+      </div>
+      <div class="col-md-4">
+        <h3>CS Enrollment vs. Ethnicity</h3>
+        <img class = "pic" src="chart.png">
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <footer>
+    <div class = "custom-footer">
+      <!-- TODO: add shield -->
+      <p>University of Southern California</p>
+      <p>Dr. Jeffrey Miller</p>
+      <p>Howard Gil</p>
+    </div>
+  </footer>
+</div> <!-- /container -->
+
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script>w3IncludeHTML();</script>
+  <script>
+    var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var config = {
+      type: 'line',
+      data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [{
+          label: "My First dataset",
+          backgroundColor: window.chartColors.red,
+          borderColor: window.chartColors.red,
+          data: [
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor()
+          ],
+          fill: false,
+        }, {
+          label: "My Second dataset",
+          fill: false,
+          backgroundColor: window.chartColors.blue,
+          borderColor: window.chartColors.blue,
+          data: [
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor(),
+          randomScalingFactor()
+          ],
+        }]
+      },
+      options: {
+        responsive: true,
+        title:{
+          display:true,
+          text:'Chart.js Line Chart'
+        },
+        tooltips: {
+          mode: 'index',
+          intersect: false,
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: true
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Month'
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Value'
+            }
+          }]
+        }
+      }
+    };
+    window.onload = function() {
+      var ctx = document.getElementById("canvas").getContext("2d");
+      window.myLine = new Chart(ctx, config);
+    };
+    document.getElementById('randomizeData').addEventListener('click', function() {
+      config.data.datasets.forEach(function(dataset) {
+        dataset.data = dataset.data.map(function() {
+          return randomScalingFactor();
+        });
+      });
+      window.myLine.update();
+    });
+    var colorNames = Object.keys(window.chartColors);
+    document.getElementById('addDataset').addEventListener('click', function() {
+      var colorName = colorNames[config.data.datasets.length % colorNames.length];
+      var newColor = window.chartColors[colorName];
+      var newDataset = {
+        label: 'Dataset ' + config.data.datasets.length,
+        backgroundColor: newColor,
+        borderColor: newColor,
+        data: [],
+        fill: false
+      };
+      for (var index = 0; index < config.data.labels.length; ++index) {
+        newDataset.data.push(randomScalingFactor());
+      }
+      config.data.datasets.push(newDataset);
+      window.myLine.update();
+    });
+    document.getElementById('addData').addEventListener('click', function() {
+      if (config.data.datasets.length > 0) {
+        var month = MONTHS[config.data.labels.length % MONTHS.length];
+        config.data.labels.push(month);
+        config.data.datasets.forEach(function(dataset) {
+          dataset.data.push(randomScalingFactor());
+        });
+        window.myLine.update();
+      }
+    });
+    document.getElementById('removeDataset').addEventListener('click', function() {
+      config.data.datasets.splice(0, 1);
+      window.myLine.update();
+    });
+    document.getElementById('removeData').addEventListener('click', function() {
+            config.data.labels.splice(-1, 1); // remove the label first
+            config.data.datasets.forEach(function(dataset, datasetIndex) {
+              dataset.data.pop();
+            });
+            window.myLine.update();
+          });
+        </script>
+      </body>
+      </html>
