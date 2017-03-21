@@ -33,6 +33,13 @@ get_FRPM <- function(schoolyear, SchoolCodes) {
                             columns_to_keep = c(4,18,19,20,21,22)
   )
   
+  #rename income estimators for easier accessing
+  names(FRPM_Data)[columns_to_keep[2]] <- "total_enrollment"
+  names(FRPM_Data)[columns_to_keep[3]] <- "free_meal_eligible"
+  names(FRPM_Data)[columns_to_keep[4]] <- "free_meal_eligible_percent"
+  names(FRPM_Data)[columns_to_keep[5]] <- "FRPM_eligible"
+  names(FRPM_Data)[columns_to_keep[6]] <- "FRPM_eligible_percent"
+  
   FRPM_Data <- FRPM_Data[columns_to_keep]
   
   return(FRPM_Data)

@@ -20,6 +20,9 @@ get_all_data <- function(years) {
       datalist[[ key ]] <- value #ACCESS WITH datalist[["1415"]]
     }
     
+    #schoolyear 1213 is missing one element...
+    datalist[["1213"]][380,"GradeLevelCode"] = 09
+    
     return(datalist)
   }
 }

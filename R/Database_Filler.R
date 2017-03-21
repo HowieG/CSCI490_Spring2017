@@ -100,7 +100,7 @@ fillSchoolyearsTable <- function() {
   schoolyears <- c("8889","8990","9091","9192","9293","9394","9495","9596","9697","9798","9899","9900","0001","0102",
                    "0203","0304","0405","0506","0607","0708","0809","0910","1011","1112","1213","1314","1415","1516")
   for(schoolyear in schoolyears) {
-    query = paste("INSERT INTO schoolyears (schoolyear) VALUES('", schoolyear, "')")
+    query = paste("INSERT INTO schoolyears (schoolyear) VALUES('", schoolyear, "')", sep = "")
     dbSendQuery(mydb, query)
   }
 }
@@ -109,28 +109,29 @@ fillDistrictsTable <- function() {
   for(row in df[, 1]) {
     districtcode <- df$DistrictCode[rowNum]
     districtname <- df$DistrictName[rowNum]
-    #hacky
+    districtname = dbEscapeStrings(mydb, districtname)
+    
     query = paste("INSERT INTO districts(district_code, district_name) SELECT ", districtcode,", '", districtname,
-                  "' FROM dual WHERE NOT EXISTS (SELECT * FROM districts WHERE district_code = ", districtcode, ")")
+                  "' FROM dual WHERE NOT EXISTS (SELECT * FROM districts WHERE district_code = ", districtcode, ")", sep = "")
     dbSendQuery(mydb, query)
     rowNum = rowNum+1
   }
 }
 fillSchoolsTable <- function() {
   #add schools
-  rowNum = 1
-  for(row in df[, 1]) {
-    schoolcode <- df$SchoolCode[rowNum]
-    schoolname <- df$SchoolName[rowNum]
-    districtcode <- df$DistrictCode[rowNum]
+  for(rowNum in 1:nrow(df)) {
+    schoolcode = df$SchoolCode[rowNum]
+    schoolname = df$SchoolName[rowNum]
+    schoolname = dbEscapeStrings(mydb, schoolname)
+    districtcode = df$DistrictCode[rowNum]
     
-    district_id_query = paste("SELECT district_id FROM districts WHERE district_code = ", districtcode)
+    district_id_query = paste("SELECT district_id FROM districts WHERE district_code =", districtcode)
     res = dbGetQuery(mydb, district_id_query)
     district_id = res$district_id
     
-    query = paste("INSERT INTO schools(school_code, district_id, school_name) SELECT ", schoolcode, ", ", district_id, ", '", schoolname,"' FROM dual WHERE NOT EXISTS (SELECT * FROM schools WHERE school_code = ", schoolcode, ")")
+    query = paste("INSERT INTO schools(school_code, district_id, school_name) SELECT ", schoolcode, ", ", district_id,
+                  ", '", schoolname,"' FROM dual WHERE NOT EXISTS (SELECT * FROM schools WHERE school_code = ", schoolcode, ")", sep = "")
     dbSendQuery(mydb, query)
-    rowNum = rowNum+1
   }
 }
 fillCoursesTable <- function() {
@@ -139,60 +140,146 @@ fillCoursesTable <- function() {
     coursecode <- df$CourseCode[rowNum]
     coursename <- df$CourseName[rowNum]
     query = paste("INSERT INTO courses(course_code, course_name) SELECT ", coursecode, ", '", coursename,
-                  "' FROM dual WHERE NOT EXISTS (SELECT * FROM courses WHERE course_code = ", coursecode, ")")
+                  "' FROM dual WHERE NOT EXISTS (SELECT * FROM courses WHERE course_code = ", coursecode, ")", sep = "")
     dbSendQuery(mydb, query)
     rowNum = rowNum+1
   }
 }
 fillGradeLevelsTable <- function() {
-  gradelevels <- c(6,7,8,9,10,11,12)
+  gradelevels <- c(0,6,7,8,9,10,11,12) #0 represents "US", a GradeLevelCode encountered in schoolyear 1213
   for(gradelevel in gradelevels) {
-    query = paste("INSERT INTO grade_levels (grade_level) VALUES('", gradelevel, "')")
+    query = paste("INSERT INTO grade_levels (grade_level) VALUES('", gradelevel, "')", sep = "")
     dbSendQuery(mydb, query)
   }
 }
 fillGendersTable <- function() {
-  genders <- c("M", "F")
-  for(gender in genders) {
-    query = paste("INSERT INTO genders (gender) VALUES('", gender, "')")
-    dbSendQuery(mydb, query)
-  }
+  dbSendQuery(mydb, "INSERT INTO genders(gender) VALUES('M');")
+  dbSendQuery(mydb, "INSERT INTO genders(gender) VALUES('F');")
 }
 fillEthnicitiesTable <- function() {
-  ethnicities <- c("NoEthRptd", "AmInd", "Asian", "PacIsl", "Filipino", "Hispanic", "AfrAm", "White", "TwoOrMore")
+  ethnicities <- c("NoEthRptd", "AmInd", "Asian", "PacIsl", "Filipino", "Hispanic", "AfrAm", "White", "TwoOrMore", "EL")
   for(ethnicity in ethnicities) {
-    query = paste("INSERT INTO ethnicities (ethnicity) VALUES('", ethnicity, "')")
+    query = paste("INSERT INTO ethnicities (ethnicity) VALUES('", ethnicity, "')", sep = "")
     dbSendQuery(mydb, query)
   }
 }
 fillIncomeEstimatorsTable <- function() {
   income_estimators <- c("free_meal_eligible", "free_meal_eligible_percent", "FRPM_eligible", "FRPM_eligible_percent")
   for(income_estimator in income_estimators) {
-    query = paste("INSERT INTO income_estimators (income_estimator_type) VALUES('", income_estimator, "')")
+    query = paste("INSERT INTO income_estimators (income_estimator_type) VALUES('", income_estimator, "')", sep = "")
     dbSendQuery(mydb, query)
   }
+}
 fillSchoolInfoTable <- function() {
-  # freemealeligible <- df[,22][rowNum]
-  # freemealeligiblepercent <- df[,23][rowNum]
-  # FRPMeligible <- df[,24][rowNum]
-  # FRPMeligiblepercent <- df[,25][rowNum]
-}
-fillCSEnrollmentsTable <- function() {
+  #get column names for school_info table
+  res <- getColumnNames("school_info")
+  #save table columns/fields to a vector
+  column_names = res[[1]]
+  #save to one string so the query doesn't get too long
+  params = paste(column_names[2:nrow(res)], collapse = ', ')
   
+  #add schools
+  rowNum = 1
+  for(row in df[, 1]) {
+    
+    sy = df$AcademicYear[rowNum]
+    sc = df$SchoolCode[rowNum]
+    te = df$total_enrollment[rowNum]
+    fme = df$free_meal_eligible[rowNum]
+    fmep = df$free_meal_eligible_percent[rowNum]
+    frpme = df$FRPM_eligible[rowNum]
+    frpmep = df$FRPM_eligible_percent[rowNum]
+    
+    #get schoolyear id corresponding to the schoolyear
+    #NOTE: schoolyear is saved as a VARCHAR!
+    schoolyear_id_query = paste("SELECT schoolyear_id FROM schoolyears WHERE schoolyear = '", sy, "';", sep = "")
+    res = dbGetQuery(mydb, schoolyear_id_query)
+    sy_id = res$schoolyear_id
+    
+    #get school id corresponding to the school code
+    school_id_query = paste("SELECT school_id FROM schools WHERE school_code = ", sc, sep = "")
+    res = dbGetQuery(mydb, school_id_query)
+    s_id = res$school_id
+    
+    values = paste(sy_id, ", ", s_id, ", ",te, ", ", fme, ", ", fmep, ", ",frpme, ", ", frpmep, sep = "")
+    
+    query = paste("INSERT INTO school_info(", params, ") SELECT ", values, " FROM dual WHERE NOT EXISTS (SELECT * FROM school_info WHERE school_id = ", s_id, ")", sep = "")
+    
+    dbSendQuery(mydb, query)
+    rowNum = rowNum+1
+  }
 }
+fillCSEnrollmentsTable <- function() { 
+  #get column names for cs_enrollments table
+  res <- getColumnNames("cs_enrollments")
+  #save table columns/fields to a vector
+  column_names = res[[1]]
+  #save to one string so the query doesn't get too long
+  params = paste(column_names[2:nrow(res)], collapse = ', ')
   
+  for(rowNum in 1:nrow(df)) {
+    #this is probably the better way to access elements in the df....
+    sy = df[rowNum, "AcademicYear"]
+    sc = df[rowNum, "SchoolCode"]
+    cc = df[rowNum, "CourseCode"]
+    gen = df[rowNum, "GenderCode"]
+    gr = df[rowNum, "GradeLevelCode"]
+    #placeholder until better solution. Maybe default is to return 0?
+    if(gr == "US") {
+      gr = 0
+    }
+    
+    schoolyear_id_query = paste("SELECT schoolyear_id FROM schoolyears WHERE schoolyear = '", sy, "';", sep = "")
+    res = dbGetQuery(mydb, schoolyear_id_query)
+    sy_id = res$schoolyear_id
+    
+    school_id_query = paste("SELECT school_id FROM schools WHERE school_code = ", sc, sep = "")
+    res = dbGetQuery(mydb, school_id_query)
+    s_id = res$school_id
+    
+    course_id_query = paste("SELECT course_id FROM courses WHERE course_code = ", cc, sep = "")
+    res = dbGetQuery(mydb, course_id_query)
+    c_id = res$course_id
+    
+    grade_level_id_query = paste("SELECT grade_level_id FROM grade_levels WHERE grade_level = ", gr, sep = "")
+    res = dbGetQuery(mydb, grade_level_id_query)
+    gr_id = res$grade_level_id
+    
+    gender_id_query = paste("SELECT gender_id FROM genders WHERE gender = '", gen, "';", sep = "")
+    res = dbGetQuery(mydb, gender_id_query)
+    gen_id = res$gender_id
+    
+    #get enrollment of each ethnicity
+    res = getColumn("ethnicities", "ethnicity")
+    ethnicities = res[[1]]
+    for(eth_id in 1:length(ethnicities)) {
+      eth_col = paste("Enroll", ethnicities[eth_id], sep = "")
+      enr = df[rowNum,eth_col]
+      values = paste(sy_id, ", ", s_id, ", ",c_id, ", ", gr_id, ", ", gen_id, ", ",eth_id, ", ", enr, sep = "")
+      query = paste("INSERT INTO cs_enrollments(", params, ") SELECT ", values, sep = "")
+      dbSendQuery(mydb, query)
+    }
+  }
 }
 ##############################################################################################################
 ########################################### Table action functions ###########################################
 ##############################################################################################################
 dropTable <- function(tablename) {
-  dropquery = paste("drop table if exists ", tablename)
-  print(dropquery)
-  dbSendQuery(mydb, dropquery)
+  dropQuery = paste("drop table if exists", tablename)
+  dbSendQuery(mydb, dropQuery)
 }
 listAllTables <- function() {
   dbListTables(mydb)
 }
+getColumnNames <- function(tablename) {
+  getColumnNameQuery = paste("SELECT COLUMN_NAME FROM information_schema.columns WHERE table_schema = 'CSCI490' AND table_name = '",tablename,"';", sep="")
+  dbGetQuery(mydb, getColumnNameQuery)
+}
+getColumn <- function(tablename, colname) {
+  query = paste("SELECT", colname, "FROM", tablename, ";")
+  dbGetQuery(mydb, query)
+}
+
 ##############################################################################################################
 ############################################## Excuting queries ##############################################
 ##############################################################################################################
@@ -210,7 +297,7 @@ create_tables <- function() {
 }
 initial_fill <- function() {
   #adding 2014-2015 data
-  df <- datalist[['1415']]
+  df <- datalist[['1314']] #can't set it this way. df is global.
   
   fillSchoolyearsTable()
   fillDistrictsTable()
@@ -223,6 +310,19 @@ initial_fill <- function() {
   fillSchoolInfoTable()
   fillCSEnrollmentsTable()
 }
+
+fill <- function() {
+  
+  df <- datalist[['1314']] #can't set it this way. df is global.
+  
+  #only execute these functions. The other fields are set and don't change
+  fillDistrictsTable()
+  fillSchoolsTable()
+  fillSchoolInfoTable()
+  fillCoursesTable()
+  fillCSEnrollmentsTable()
+}
+
 fill_database <- function() {
   create_tables()
   initial_fill()
@@ -233,7 +333,25 @@ fill_database <- function() {
 ##############################################################################################################
 
 #Probably have to make some of the fill____Tables take in a year as a parameter
+
 #Possibility of trying to add data for a school that closed before 2014, and so would not be in the school table
+
+#Using dbSendQuery may give an error:  "...connection with pending rows, close resultSet before continuing"
+#From Stackoverflow: http://stackoverflow.com/questions/4084028/how-to-close-resultset-in-rmysql
+#dbClearResult(dbListResults(mydb)[[1]])
+
+#Schoolyear 1213 is missing a single gradelevel... run df[380,"GradeLevelCode"] = 09 before filling the tables
+#1213 has grade_level_code US....
+
+
+#Execution
+# > df <- datalist[['1415']]
+# > fillCSEnrollmentsTable()
+# > df <- datalist[['1314']]
+# > fillCSEnrollmentsTable()
+# > df <- datalist[['1213']]
+# > df[380,"GradeLevelCode"] = 09
+# > fillCSEnrollmentsTable()
 
 ##############################################################################################################
 ################################################### Misc. ####################################################
