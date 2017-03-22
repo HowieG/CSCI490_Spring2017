@@ -1,16 +1,18 @@
-<div>
+<div class="col-md-4 text-right">
 
  <div class="dropdown">
    Select X-Axis
-   <!-- optional? -->
    <div class="btn-group" role="menu"> 
-    <button id = "xaxis" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> testing super long dropdown example
-      <!-- TODO: pin this to the right -->
+    <button id = "xaxis" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> School Year
       <span class="caret"></span> 
     </button>
     <ul class="dropdown-menu">
-      <li><a href="#" title="the full string here">Dropdown testing super long dropdown example</a></li>
-      <li><a href="#" title="Dropdown testing super long dropdown example">Dropdown testing super long dropdown example</a></li>
+      <li><a href="#">School Year</a></li>
+      <li><a href="#">School</a></li>
+      <li><a href="#">Grade Level</a></li>
+      <li><a href="#">Gender</a></li>
+      <li><a href="#">Ethnicity</a></li>
+      <li><a href="#">Income Level</a></li>
     </ul>
   </div>
 </div>
@@ -18,34 +20,30 @@
 <br/>
 
 <div class="dropdown">
- Select Schoolyear
- <!-- optional? -->
+ Select School Year
  <div class="btn-group" role="menu"> 
-  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> testing super long dropdown example
-    <!-- TODO: pin this to the right -->
+  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> 2014-2015
     <span class="caret"></span> 
   </button>
   <ul class="dropdown-menu">
     <li><a href="#">All</a></li>
     <li class="divider"></li>
-    <li><a href="#" title="the full string here">Dropdown testing super long dropdown example</a></li>
-    <li><a href="#" title="Dropdown testing super long dropdown example">Dropdown testing super long dropdown example</a></li>
+    <li><a href="#">1988-1989</a></li>
+    <li><a href="#">2014-2015</a></li>
   </ul>
 </div>
 </div>
 
 <div class="dropdown">
  Select School
- <!-- optional? -->
  <div class="btn-group" role="menu"> 
-  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> testing super long dropdown example
-    <!-- TODO: pin this to the right -->
+  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> Arcadia High
     <span class="caret"></span> 
   </button>
   <ul class="dropdown-menu">
     <li><a href="#">All</a></li>
     <li class="divider"></li>
-    <li><a href="#" title="the full string here">Dropdown testing super long dropdown example</a></li>
+    <li><a href="#" title="Arcadia High">Arcadia High</a></li>
     <li><a href="#" title="Dropdown testing super long dropdown example">Dropdown testing super long dropdown example</a></li>
   </ul>
 </div>
@@ -53,68 +51,64 @@
 
 <div class="dropdown">
  Select Grade Level
- <!-- optional? -->
  <div class="btn-group" role="menu"> 
-  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> testing super long dropdown example
-    <!-- TODO: pin this to the right -->
+  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> 12th Grade
     <span class="caret"></span> 
   </button>
   <ul class="dropdown-menu">
     <li><a href="#">All</a></li>
     <li class="divider"></li>
-    <li><a href="#" title="the full string here">Dropdown testing super long dropdown example</a></li>
-    <li><a href="#" title="Dropdown testing super long dropdown example">Dropdown testing super long dropdown example</a></li>
+    <li><a href="#">6th Grade</a></li>
+    <li><a href="#">12th Grade</a></li>
   </ul>
 </div>
 </div>
 
 <div class="dropdown">
  Select Gender
- <!-- optional? -->
  <div class="btn-group" role="menu"> 
-  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> testing super long dropdown example
-    <!-- TODO: pin this to the right -->
+  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> Male
     <span class="caret"></span> 
   </button>
   <ul class="dropdown-menu">
     <li><a href="#">All</a></li>
     <li class="divider"></li>
-    <li><a href="#" title="the full string here">Dropdown testing super long dropdown example</a></li>
-    <li><a href="#" title="Dropdown testing super long dropdown example">Dropdown testing super long dropdown example</a></li>
+    <li><a href="#">Male</a></li>
+    <li><a href="#">Female</a></li>
   </ul>
 </div>
 </div>
 
 <div class="dropdown">
  Select Ethnicity
- <!-- optional? -->
  <div class="btn-group" role="menu"> 
-  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> testing super long dropdown example
-    <!-- TODO: pin this to the right -->
+  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> Hispanic
     <span class="caret"></span> 
   </button>
   <ul class="dropdown-menu">
     <li><a href="#">All</a></li>
     <li class="divider"></li>
-    <li><a href="#" title="the full string here">Dropdown testing super long dropdown example</a></li>
+    <li><a href="#" title="Hispanic">Hispanic</a></li>
     <li><a href="#" title="Dropdown testing super long dropdown example">Dropdown testing super long dropdown example</a></li>
   </ul>
 </div>
 </div>
 
 <div class="dropdown">
- Select Income Range
- <!-- optional? -->
+ Select
+
+<!-- Income Level Popover Description -->
+<a id = "income-level-popover" data-toggle="popover" data-placement="bottom" title="Income Level Description" data-content="Income Level was estimated using the percentage of students at the school who qualified for Free or Reduced Price Meals (FRPM). [Data - or link - for income threshold] . Selecting 'Poor: 80% - 100% Qualify' shows data for schools where 80% to 100% of students qualify for FRPM.">Income Level</a>
+
  <div class="btn-group" role="menu"> 
-  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> testing super long dropdown example
-    <!-- TODO: pin this to the right -->
+  <button id = "xaxis" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> Poor: 80% - 100% Qualify
     <span class="caret"></span> 
   </button>
   <ul class="dropdown-menu">
     <li><a href="#">All</a></li>
     <li class="divider"></li>
-    <li><a href="#" title="the full string here">Dropdown testing super long dropdown example</a></li>
-    <li><a href="#" title="Dropdown testing super long dropdown example">Dropdown testing super long dropdown example</a></li>
+    <li><a href="#">Poor: 80% - 100% Qualify</a></li>
+    <li><a href="#">Wealthy: 0% - 20% Qualify</a></li>
   </ul>
 </div>
 

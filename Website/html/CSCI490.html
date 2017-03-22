@@ -7,7 +7,12 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="../favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="../favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
 
   <title>USC: LA School Data Interface</title>
 
@@ -15,51 +20,31 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!-- Optional Bootstrap theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Styling -->
   <link href="../css/CSCI490.css" rel="stylesheet">
+
   <!-- script necessary to include other HTML inside of this one -->
   <script src="https://www.w3schools.com/lib/w3data.js"></script>
 
-
-  <!-- Chart head -->
+  <!-- Chart -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
   <script src="../js/utils.js"></script>
   <script src="../js/basic_line_graph.js"></script>
-  <style>
-    canvas{
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-    }
-  </style>
-
-
 </head>
-
 <body>
 
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
+        <!-- should get rid of this, but adds height to navbar-->
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Project name</a>
+        <div class="navbar-brand">Project name</div>
+        <!-- <a href="#" class="navbar-link">Submissions</a> -->
       </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <form class="navbar-form navbar-right">
-            <!-- <div class="form-group">
-            <input type="text" placeholder="Email" class="form-control">
-          </div>
-          <div class="form-group">
-            <input type="password" placeholder="Password" class="form-control">
-          </div>
-          <button type="submit" class="btn btn-success">Sign in</button> -->
-        </form>
-      </div><!--/.navbar-collapse -->
+      <p class="navbar-text navbar-right"><a href="#" class="navbar-link">Submissions</a></p>
     </div>
+
   </nav>
 
   <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -72,68 +57,64 @@
     </div>
   </div>
 
-  <div class="main-container">
+  <div id="main-container">
     <div class = "row">
-      <div class="col-md-4 text-right">
-        <div w3-include-html="dropdown.html">
-        </div>
+      <div w3-include-html="dropdown.html">
       </div>
-      <!-- <div class="col-md-8" w3-include-html="basic_line_graph.html"> -->
-      <div class = "col-md-8 text-center">
-        <div style="width:85%; margin: auto;">
+      <div class = "col-md-8">
+        <div id = "chart">
           <canvas id="canvas"></canvas>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="container">
-    <div class = "row">
-      <div class="col-md-12 text-center">
-        <h2>Notable Plots</h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <h3>CS Enrollment vs. Time</h3>
-        <img class = "pic" src="chart.png">
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-        <h3>CS Enrollment vs. Income</h3>
-        <img class = "pic" src="chart.png">
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-        <h3>CS Enrollment vs. Ethnicity</h3>
-        <img class = "pic" src="chart.png">
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-      </div>
-    </div>
+  <hr>
+
+  <div w3-include-html="notable_plots.html">
   </div>
 
-  <hr>
+  <div class = "text-center">
+    <p>Research was collected with help of the California Department of Education's online resources.</p>
+  </div>
 
   <footer>
     <div class = "custom-footer">
-      <!-- TODO: add shield -->
-      <p>University of Southern California</p>
-      <p>Dr. Jeffrey Miller</p>
-      <p>Howard Gil</p>
+      <div class = "row">
+        <div class = "col-md-4">
+          <h3>Contact</h3>
+          <p>Dr. Jeffrey Miller, <a href="mailto:jeffrey.miller@usc.edu?subject=CS Enrollment Research">jeffrey.miller@usc.edu</a></p>
+          <p>Howard Gil, <a href="mailto:hgil@usc.edu?subject=CS Enrollment Research">hgil@usc.edu</a></p>
+
+
+        </div>
+        <div class = "col-md-4">
+        </div>
+        <div class = "col-md-4">
+          <img id = "USC-seal" src = "../img/FormalSeal_Word_RegUse_CardOnBlack.png">
+        </div>
+      </div>
     </div>
   </footer>
-</div> <!-- /container -->
-
 
   <!-- Bootstrap core JavaScript
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script>w3IncludeHTML();</script>
+  <script>
+    w3IncludeHTML();
+// hacky way to add the popover script, since it won't exist at the time the main HTML is loaded
+$('body').mouseover('#income-level-popover',function() {
+  $('[data-toggle="popover"]').popover(); 
+});
+//dismiss popover
+$('body').on('click', function (e) {
+    if ($(e.target).data('toggle') !== 'popover') { 
+        $('[data-toggle="popover"]').popover('hide');
+    }
+});
+</script>
 
-      </body>
-      </html>
+</body>
+</html>

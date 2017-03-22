@@ -4,6 +4,16 @@ body {
 	margin: 0;
 }
 
+canvas{
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+.row {
+	margin: 0;
+}
+
 .jumbotron.custom-jumbotron {
 	padding-bottom: 30px;
 }
@@ -13,13 +23,9 @@ p.fine-print {
 	color: #AAA;
 }
 
-.custom-footer {
-	background: #2C2C2C;
-	color: #DDD;
-}
-
-.main-container {
-	padding-bottom: 100px;
+#main-container {
+	margin-top: 30px;
+	padding-bottom: 30px;
 }
 
 .btn {
@@ -31,6 +37,7 @@ p.fine-print {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	font-size: 9pt;
 }
 
 .btn-group {
@@ -43,15 +50,46 @@ p.fine-print {
 
 /*right-align caret for aesthetics*/
 .caret {
-    position: absolute;
-    left: 93%;
-    top: 45%;
+	position: absolute;
+	left: 93%;
+	top: 45%;
 }
 
 .dropdown-menu .divider {
 	margin: 5px 0;
 }
 
+.custom-popover {
+	margin: 0;
+	padding: 0;
+	float: left;
+	width: 100px;
+}
+
+a#income-level-popover {
+	text-decoration: none;
+}
+
+#chart {
+	width:90%;
+	margin: auto;
+}
+
+#notable-plots {
+	margin-bottom: 50px;
+}
+
 .pic {
 	width: 350px;
+}
+
+.custom-footer > .row {
+	background: #2C2C2C;
+	color: white;
+	padding: 10px;
+}
+
+#USC-seal {
+	width: 400px;
+	float: right;
 }
