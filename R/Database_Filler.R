@@ -323,11 +323,17 @@ fill <- function() {
   fillCSEnrollmentsTable()
 }
 
-fill_database <- function() {
-  create_tables()
-  initial_fill()
-}
+##############################################################################################################
+################################################ Test queries ################################################
+##############################################################################################################
+query = "SELECT * FROM schools WHERE school_name = 'Arcadia High'"
+res = dbGetQuery(mydb, query)
 
+query = "SELECT * FROM cs_enrollments WHERE school_id = 5"
+res = dbGetQuery(mydb, query)
+
+query = "SELECT * FROM cs_enrollments WHERE course_id = 7"
+res = dbGetQuery(mydb, query)
 ##############################################################################################################
 ################################################### Notes ####################################################
 ##############################################################################################################
@@ -343,6 +349,7 @@ fill_database <- function() {
 #Schoolyear 1213 is missing a single gradelevel... run df[380,"GradeLevelCode"] = 09 before filling the tables
 #1213 has grade_level_code US....
 
+#Data innacuracy: Arcadia High has 
 
 #Execution
 # > df <- datalist[['1415']]
