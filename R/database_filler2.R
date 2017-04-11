@@ -44,7 +44,7 @@ createAllSchoolInfoTable <- function() {
 }
 
 #TODO update the CS_enrollments table because the schoolIDs are now all different
-createCSEnrollmentsTable <- function() {
+createUpdatedCSEnrollmentsTable <- function() {
   dbSendQuery(mydb, "
               CREATE TABLE updated_cs_enrollments (
               cs_enrollments_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -172,7 +172,10 @@ fillFRPMData <- function() {
   
 }
 
-fillCSEnrollmentsTable <- function() { 
+fillUpdatedCSEnrollmentsTable <- function() { 
+  
+  df = datalist[["1415"]]
+  
   #get column names for cs_enrollments table
   res <- getColumnNames("cs_enrollments")
   #save table columns/fields to a vector
@@ -192,13 +195,21 @@ fillCSEnrollmentsTable <- function() {
       gr = 0
     }
     
+    sc = as.numeric(sc)
+    
     schoolyear_id_query = paste("SELECT schoolyear_id FROM schoolyears WHERE schoolyear = '", sy, "';", sep = "")
     res = dbGetQuery(mydb, schoolyear_id_query)
     sy_id = res$schoolyear_id
     
-    school_id_query = paste("SELECT school_id FROM schools WHERE school_code = ", sc, sep = "")
+    school_id_query = paste("SELECT school_id FROM all_schools WHERE school_code = ", sc, sep = "")
     res = dbGetQuery(mydb, school_id_query)
     s_id = res$school_id
+    
+    #does not insert if the school does not exist in our school_info table
+    #this filters out many middle schools
+    if(nrow(res) == 0) {
+      next
+    }
     
     course_id_query = paste("SELECT course_id FROM courses WHERE course_code = ", cc, sep = "")
     res = dbGetQuery(mydb, course_id_query)
@@ -219,9 +230,11 @@ fillCSEnrollmentsTable <- function() {
       eth_col = paste("Enroll", ethnicities[eth_id], sep = "")
       enr = df[rowNum,eth_col]
       values = paste(sy_id, ", ", s_id, ", ",c_id, ", ", gr_id, ", ", gen_id, ", ",eth_id, ", ", enr, sep = "")
-      query = paste("INSERT INTO cs_enrollments(", params, ") SELECT ", values, sep = "")
+      query = paste("INSERT INTO updated_cs_enrollments(", params, ") SELECT ", values, ";", sep = "")
+      #print(query)
       dbSendQuery(mydb, query)
     }
+    #print(rowNum)
   }
 }
 ##############################################################################################################
