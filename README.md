@@ -10,3 +10,5 @@ R: R scripts that filter out irrelevant data, create local tables and fill datab
 Resources: Relevant reading, e.g. how data was collected, reports, etc.
 
 Screenshots: Relevant information which we may come back to.
+
+Data sourced from: http://www.cde.ca.gov/ds/sd/df/filesassign.asp
