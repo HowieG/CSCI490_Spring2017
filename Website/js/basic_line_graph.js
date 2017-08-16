@@ -1,36 +1,20 @@
- var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+ var MONTHS = ["None", "AmInd", "Asian", "PacIsl", "Filipino", "Hispanic", "AfrAm", "White", "TwoOrMore", "EL"];
  var config = {
   type: 'line',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ["None", "AmInd", "Asian", "PacIsl", "Filipino", "Hispanic", "AfrAm", "White", "TwoOrMore", "EL"],
     datasets: [{
-      label: "My First dataset",
+      label: "Arcadia High School",
       backgroundColor: window.chartColors.red,
       borderColor: window.chartColors.red,
-      data: [
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor()
-      ],
+      data: [0,0,310,2,13,35,7,54,3,52],
       fill: false,
     }, {
-      label: "My Second dataset",
+      label: "Charles T. Kranz Intermediate",
       fill: false,
       backgroundColor: window.chartColors.blue,
-      borderColor: window.chartColors.blue,
-      data: [
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor(),
-      randomScalingFactor()
-      ],
+      borderColor: window.chartColors.green,
+      data: [2,0,3,0,0,73,0,0,0,25],
     }]
   },
   options: {

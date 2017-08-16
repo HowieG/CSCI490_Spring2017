@@ -43,6 +43,16 @@ createAllSchoolInfoTable <- function() {
               FRPM_eligible_percent DECIMAL(10,9))")
 }
 
+createDetailedSchoolInfoTable <- function() {
+  dbSendQuery(mydb, "
+              CREATE TABLE detailed_school_info (
+              school_id INT PRIMARY KEY,
+              schoolyear_id INT,
+              ethnicity_id INT,
+              gender_id INT,
+              enrollment INT)")
+}
+
 #TODO update the CS_enrollments table because the schoolIDs are now all different
 createUpdatedCSEnrollmentsTable <- function() {
   dbSendQuery(mydb, "
