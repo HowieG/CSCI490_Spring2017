@@ -12,3 +12,23 @@ Resources: Relevant reading, e.g. how data was collected, reports, etc.
 Screenshots: Relevant information which we may come back to.
 
 Data sourced from: http://www.cde.ca.gov/ds/sd/df/filesassign.asp
+
+
+---------------------------------------- USAGE ----------------------------------------
+
+*Run schoolInfoTable.R, then database_filler2.R*
+
+There are some renamed/updated R scripts that I am keeping to avoid breaking anything.
+
+<Ignore this file> -> <Use this file>
+
+get_FRPM.R -> get_FRPM2.R
+get_school_info.R -> get_CSCourseTable_forNewData.R
+get_all_data.R -> schoolInfoTable.R
+database_filler.R -> database_filler2.R
+
+NOTE:
+The data has minor inconsistencies from year to year (e.g. one random cell will be null)
+
+TODO:
+Replace setwd(...) file path with your local file path or find a more portable function
